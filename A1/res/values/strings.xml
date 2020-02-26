@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">A1_1</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="p1t">Pro1</string>
+	<string name="p2t">Pro2</string>
+	<string name="p3t">Pro3</string>
+	<string name="p4t">Pro4</string>
+	<string name="p5t">Pro5</string>
+</resources>
