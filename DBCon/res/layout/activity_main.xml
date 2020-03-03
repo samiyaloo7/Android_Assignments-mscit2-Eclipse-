@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="30sp"
+    android:background="@drawable/back"
+    android:paddingRight="30sp"
+   	android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout 
+        android:layout_marginTop="30sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+	    <EditText
+	        android:hint="@string/ten"
+	        android:layout_weight=".5"
+	        android:textColor="#fff"
+	        android:id="@+id/etname"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:ems="10" >
+	
+	        <requestFocus />
+	    </EditText>
+	
+	    <Button
+	        android:layout_weight=".5"
+	        android:id="@+id/badd"
+	        android:textColor="#fff"
+	        style="?android:attr/buttonStyleSmall"
+	        android:layout_width="70sp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/tadd" />
+	</LinearLayout>
+
+    <ListView 
+        android:id="@+id/lvusers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        
+    </ListView>
+
+</LinearLayout>
