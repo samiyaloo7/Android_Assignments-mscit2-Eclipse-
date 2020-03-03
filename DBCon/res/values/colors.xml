@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="backup">#E561Ff</color>
+    <color name="backdown">#FE8787</color>
+    <color name="grayup">#FAF9FB</color>
+    <color name="graydown">#BC8DFB</color>
+</resources>
