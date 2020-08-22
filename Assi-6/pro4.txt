@@ -1,0 +1,178 @@
+4. Create an application that can perform all the Tween animation using different buttons. 
+{Animation performs on TextView widget.}
+
+
+------------------------------------------------
+res/layout/pro4.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#555"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+	<LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_weight=".6"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+	    <TextView android:id="@+id/tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textColor="#fff"
+	        android:text="@string/app_name" />
+    </LinearLayout>
+	
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_weight=".4"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+    	
+    	<Button android:id="@+id/movebtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#fff"
+	        android:text="@string/move"/> 
+	    <Button android:id="@+id/fadebtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#fff"
+	        android:text="@string/fade"/>    
+    	<Button android:id="@+id/rotatebtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#fff"
+	        android:text="@string/rotate"/> 
+	    <Button android:id="@+id/scalebtn"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:textColor="#fff"
+	        android:text="@string/scale"/>
+    </LinearLayout>
+    
+    
+</LinearLayout>
+------------------------------------------------
+res/values/strings.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Assi6</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="move">Move</string>
+    <string name="rotate">Rotate</string>
+    <string name="scale">Scale</string>
+    <string name="fade">Fade</string>
+
+</resources>
+
+------------------------------------------------
+res/drawable/fade.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<alpha
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromAlpha="0.1" 
+    android:toAlpha="1.0"
+    android:duration="1500">
+</alpha>
+
+------------------------------------------------
+res/drawable/rotate.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<rotate
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromDegrees="0"
+    android:toDegrees="360"
+    android:pivotX="50%"
+    android:pivotY="50%"
+    android:duration="2000">
+</rotate>
+
+------------------------------------------------
+res/drawable/move.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXDelta="-50%"
+    android:fromYDelta="-50%"
+    android:toXDelta="50%"
+    android:toYDelta="0"
+    android:duration="1500"/>
+
+------------------------------------------------
+res/drawable/scale.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<scale xmlns:android="http://schemas.android.com/apk/res/android"
+   android:fromXScale="0"
+   android:toXScale="1"
+   android:fromYScale="0"
+   android:toYScale="1"
+   android:pivotX="50%"
+   android:pivotY="50%"
+   android:duration="1500">
+</scale>
+
+------------------------------------------------
+src/samiyal/assi6/Pro4.java
+------------------------------------------------
+package samiyal.assi6;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
+
+public class Pro4 extends Activity {
+	Button tr, ro, sc, fd;
+	TextView tv;
+	Animation anm;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro4);
+		tr = (Button) findViewById(R.id.movebtn);
+		fd = (Button) findViewById(R.id.fadebtn);
+		ro= (Button) findViewById(R.id.rotatebtn);
+		sc = (Button) findViewById(R.id.scalebtn);
+		tv = (TextView) findViewById(R.id.tv);
+		tr.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				anm = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.move);
+				tv.startAnimation(anm);
+			}
+		});
+		fd.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				anm = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
+				tv.startAnimation(anm);
+			}
+		});
+		sc.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				anm = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale);
+				tv.startAnimation(anm);
+			}
+		});
+		ro.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				anm = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate);
+				tv.startAnimation(anm);
+			}
+		});
+	}
+}

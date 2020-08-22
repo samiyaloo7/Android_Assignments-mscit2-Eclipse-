@@ -1,0 +1,93 @@
+5. Create an application that print message in activity according to condition like (Take 5 Star in Rating bar) 
+	1) If rating value greater than or equal to 3 than print “Best Rating for you” 
+	2) If rating value greater than or equal to 2 and less than 3 than print “Average Rating for you” 
+	3) Remaining will print “Bad Rating for you”
+
+
+----------------------------------------------------------
+AndroidManifest.xml
+----------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="samiyal.assi4"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity android:name="samiyal.assi4.Pro4">
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+		</activity>
+    </application>
+
+</manifest>
+
+----------------------------------------------------------
+res/layout/pro5.xml
+----------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#333"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RatingBar
+        android:id="@+id/rb"
+        android:stepSize=".5"
+        android:numStars="5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
+
+----------------------------------------------------------
+src/samiyal/assi4/Pro5.java
+----------------------------------------------------------
+
+package samiyal.assi4;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.RatingBar;
+import android.widget.RatingBar.OnRatingBarChangeListener;
+import android.widget.Toast;
+
+public class Pro5 extends Activity {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro5);
+		RatingBar rb = (RatingBar) findViewById(R.id.rb);
+		rb.setOnRatingBarChangeListener(new OnRatingBarChangeListener() {
+			@Override
+			public void onRatingChanged(RatingBar r, float val, boolean b) {
+				Log.e("Rating : ", Float.toString(val));
+				if(val >= 3) {
+					Toast.makeText(getApplicationContext(), "Best Rating For You", Toast.LENGTH_SHORT).show();
+				}else {
+					if(val >= 2){
+						Toast.makeText(getApplicationContext(), "Average Rating For You", Toast.LENGTH_SHORT).show();
+					}else {
+						Toast.makeText(getApplicationContext(), "Bad Rating For You", Toast.LENGTH_SHORT).show();
+					}
+				}
+			}
+		});
+	}
+}

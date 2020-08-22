@@ -1,0 +1,94 @@
+4. Create seek bar event in android that print value of seek bar in logcat and change background color after value of 25.
+
+----------------------------------------------------------
+AndroidManifest.xml
+----------------------------------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="samiyal.assi4"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity android:name="samiyal.assi4.Pro4">
+			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+		</activity>
+    </application>
+
+</manifest>
+
+----------------------------------------------------------
+res/layout/pro4.xml
+----------------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sblayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="#333"
+    android:paddingLeft="25sp"
+    android:paddingRight="25sp"
+    android:orientation="vertical" >
+    
+    <SeekBar android:id="@+id/sb"
+        android:layout_width="match_parent"
+        android:max="100"
+        android:progress="1"
+        android:thumb="@drawable/ic_launcher"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>
+----------------------------------------------------------
+src/samiyal/assi4/Pro4.java
+----------------------------------------------------------
+package samiyal.assi4;
+
+import android.app.Activity;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+
+public class Pro4 extends Activity {
+	LinearLayout l;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro4);
+		SeekBar sb = (SeekBar) findViewById(R.id.sb);
+		l = (LinearLayout) findViewById(R.id.sblayout);
+		sb.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+			@Override
+			public void onProgressChanged(SeekBar s, int val, boolean b) {
+				Log.e("SeekBar : ", Integer.toString(val));
+				if(val > 25) {
+					l.setBackgroundColor(Color.BLUE);
+				}else {
+					l.setBackgroundColor(Color.GRAY);
+				}
+			}
+			@Override
+			public void onStartTrackingTouch(SeekBar arg0) {
+			}
+			@Override
+			public void onStopTrackingTouch(SeekBar arg0) {
+			}
+		});
+	}
+}

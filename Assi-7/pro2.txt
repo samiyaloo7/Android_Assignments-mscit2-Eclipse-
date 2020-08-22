@@ -1,0 +1,74 @@
+2. Create an application that can call a phone to another emulator. 
+(You have input the number of another emulator.)
+
+
+-------------------------------
+res/layouts/pro2.xml
+-------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#555"
+    android:gravity="center"
+    android:paddingLeft="30sp"
+    android:paddingRight="30sp"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/tnum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="50sp"
+		android:maxLength="10"
+		android:hint="Enter Num To Call"
+		android:textColor="#fff"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+	<Button 
+	    android:id="@+id/bcall"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Call"
+	    android:layout_marginTop="50sp"
+	    />
+</LinearLayout>
+
+-------------------------------
+src/samiyal/assi7/Pro2.java
+-------------------------------
+package samiyal.assi7;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class Pro2 extends Activity {
+	EditText num;
+	Button cbtn;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro2);
+		num = (EditText) findViewById(R.id.tnum);
+		cbtn = (Button) findViewById(R.id.bcall);
+		cbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				String n = num.getText().toString().trim();
+				Intent i = new Intent(Intent.ACTION_CALL);
+				i.setData(Uri.parse("tel:"+n));
+				startActivity(i);
+			}
+		});
+	}
+}
+

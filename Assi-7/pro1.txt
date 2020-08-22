@@ -1,0 +1,445 @@
+1. Create an application that can perform registration form and store the below data in database.
+ Input name, address, contact_no, blood_group, hobby and gender.
+ After registering Input username and password (check validation using Database)
+ If valid user then Display valid user’s records in Listview.
+
+
+-------------------------------
+res/values/strings.xml
+-------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Assi7</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="rttl">Registration</string>
+    <string name="login">Login</string>
+    <string name="reg">Register</string>
+    <string name="entername">Enter Name</string>
+    <string name="enterpass">Enter Password</string>
+    <string name="entercont">Enter Contact No.</string>
+    <string name="enteradd">Enter Address</string>
+    <string name="enterhobby">Enter Hobby</string>
+    <string name="enterbg">Enter Blood Group</string>
+    <string name="gen">Gender : </string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="cnl">Cancel</string>
+    
+</resources>
+
+-------------------------------
+res/layout/pro1.xml
+-------------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingBottom="10sp"
+        android:paddingLeft="30sp"
+        android:paddingRight="30sp"
+        android:paddingTop="10sp" >
+
+        <TextView
+            android:id="@+id/ttl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:text="@string/rttl"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <EditText
+            android:id="@+id/namet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:ems="10"
+            android:hint="@string/entername" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/passt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:ems="10"
+            android:hint="@string/enterpass"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/addt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:ems="10"
+            android:hint="@string/enteradd"
+            android:inputType="textPostalAddress" />
+
+        <EditText
+            android:id="@+id/contt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:ems="10"
+            android:hint="@string/entercont"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/bgt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:ems="10"
+            android:hint="@string/enterbg" />
+
+        <EditText
+            android:id="@+id/hobbyt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:ems="10"
+            android:hint="@string/enterhobby" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7sp"
+            android:paddingLeft="30sp" >
+
+            <TextView
+                android:id="@+id/gentv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gen" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <RadioButton
+                    android:id="@+id/malerb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/male" />
+
+                <RadioButton
+                    android:id="@+id/femalerb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/female" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/regbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reg" />
+        <Button
+            android:id="@+id/loginbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login" />
+    </LinearLayout>
+
+</ScrollView>
+-------------------------------
+src/samiyal/assi7/Pro1.java
+-------------------------------
+package samiyal.assi7;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.Toast;
+
+public class Pro1 extends Activity {
+	Button regbtn, loginbtn;
+	EditText name, pass, add, cont, hob, bg;
+	RadioButton male, female;
+	String n="", p="", a="", c="", h="", b="", g="";
+	SQLiteDatabase db;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro1);
+		regbtn = (Button) findViewById(R.id.regbtn);
+		loginbtn = (Button) findViewById(R.id.loginbtn);
+        male = (RadioButton) findViewById(R.id.malerb);
+        female = (RadioButton) findViewById(R.id.femalerb);
+        name = (EditText) findViewById(R.id.namet);
+        pass = (EditText) findViewById(R.id.passt);
+        cont = (EditText) findViewById(R.id.contt);
+        add = (EditText) findViewById(R.id.addt);
+        hob = (EditText) findViewById(R.id.hobbyt);
+        bg = (EditText) findViewById(R.id.bgt);
+        try{
+        	db = openOrCreateDatabase("pro1", MODE_PRIVATE, null);
+        	db.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR,pass VARCHAR,address VARCHAR,contact INT(10),hob VARCHAR,bg VARCHAR,gen VARCHAR)");		
+        }catch(SQLException e){
+        	Log.e("sqlError : ", e.toString());
+        }
+        regbtn.setOnClickListener(new OnClickListener() {
+        	@Override
+			public void onClick(View arg0) {
+				
+				n = name.getText().toString().trim();
+				p = pass.getText().toString().trim();
+				a = add.getText().toString().trim();
+				c = cont.getText().toString().trim();
+				h = hob.getText().toString().trim();
+				b = bg.getText().toString().trim();
+				if(male.isChecked()){	
+					g = male.getText().toString().trim();
+				}else if(female.isChecked()){	
+					g = female.getText().toString().trim();
+				}
+				if(n!="" && p!="" && a!="" && c!="" && h!="" && b!="" && g!=""){
+					try{
+						Cursor c = db.rawQuery("SELECT * FROM users WHERE name='"+n+"'", null);
+						if(c.getCount() == 0){
+							db.execSQL("INSERT INTO users VALUES ('"+n+"','"+p+"','"+a+"','"+c+"','"+h+"','"+b+"','"+g+"')");
+							Log.e("sqllite : ", "Data inserted");
+							startActivity(new Intent(getApplicationContext(), Pro1_login.class));
+						}else{
+							Toast.makeText(getApplicationContext(), "User already exists", Toast.LENGTH_SHORT).show();
+						}
+					}catch(SQLException e){
+						Log.e("sqllite : ", e.toString());
+					}
+				}else {
+					Toast.makeText(getApplicationContext(), "Fill all the fields", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+        loginbtn.setOnClickListener(new OnClickListener() {
+        	@Override
+			public void onClick(View arg0) {
+        		startActivity(new Intent(getApplicationContext(), Pro1_login.class));
+        	}
+        });
+	}
+}
+
+-------------------------------
+res/layout/p1login.xml
+-------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingLeft="30sp"
+    android:paddingRight="30sp"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/lttl"
+        android:textSize="35sp"
+        android:layout_marginBottom="100sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <EditText
+        android:id="@+id/lnamet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/entername"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/lpasst"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enterpass"
+        android:ems="10"
+        android:layout_marginBottom="100sp"
+        android:inputType="textPassword" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/lbtnlogin"
+            android:layout_width="wrap_content"
+            android:layout_weight=".5"
+            android:layout_height="wrap_content"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/lbtnreg"
+            android:layout_weight=".5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/reg" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+-------------------------------
+src/samiyal/assi7/Pro1_login.java
+-------------------------------
+package samiyal.assi7;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.SQLException;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class Pro1_login extends Activity {
+	EditText uid, pass;
+	Button lbtn, rbtn;
+	SQLiteDatabase db;
+	String[] str = {"","","","","","",""};
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.p1login);
+		
+		uid = (EditText) findViewById(R.id.lnamet);
+		pass = (EditText) findViewById(R.id.lpasst);
+		lbtn = (Button) findViewById(R.id.lbtnlogin);
+		rbtn = (Button) findViewById(R.id.lbtnreg);
+		try{
+			db = openOrCreateDatabase("pro1", MODE_PRIVATE, null);
+	    }catch(SQLException e){
+	    	Log.e("sqlError : ", e.toString());
+	    }
+		
+		rbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				startActivity(new Intent(getApplicationContext(), Pro1.class));
+			}
+		});
+		
+		lbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+//				startActivity(new Intent(getApplicationContext(), Pro1.class));
+				String u = uid.getText().toString().trim();
+				String p = pass.getText().toString().trim();
+//				Log.e("SQLITE :", "Trying "+u+" and "+p);
+				boolean b = false;
+				if(!u.equals("") && !p.equals("")){
+//					Log.e("SQLITE :", "Trying "+u+" and "+p);
+					try{
+						Cursor c = db.rawQuery("SELECT * FROM users WHERE name='"+u+"' LIMIT 1", null);
+						c.moveToFirst();
+						if(u.equals(c.getString(0))){
+							if(p.equals(c.getString(1))){
+								b=true;
+							}
+						}
+						if(b==true){
+							int i = 0;
+							while(i < 7) {
+								str[i] = c.getString(i);
+								i++;
+							}
+							startActivity(new Intent(getApplicationContext(), Home.class).putExtra("data", str));
+						}else {
+							Toast.makeText(getApplicationContext(), "User name or pass is invalid", Toast.LENGTH_SHORT).show();
+						}
+					}catch(SQLException e){
+						Log.e("SQLITE :", e.toString());
+					}
+				}else {
+					Toast.makeText(getApplicationContext(), "Fill all the fields", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		
+	}
+}
+
+-------------------------------
+res/layout/home.xml
+-------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#aaa"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/ttltv"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ListView
+        android:id="@+id/datalv"
+        android:background="#aaa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+</LinearLayout>
+
+-------------------------------
+src/samiyal/assi7/Home.java
+-------------------------------
+package samiyal.assi7;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+public class Home extends Activity {
+	TextView tv;
+	ListView lv;
+	ArrayAdapter<String> ad;
+	String[] str = {"","","","","","",""};
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.home);
+		lv = (ListView) findViewById(R.id.datalv);
+		str = this.getIntent().getStringArrayExtra("data");
+		((TextView) findViewById(R.id.ttltv)).setText(str[0]+"'s Data");
+		ad = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, str);
+		lv.setAdapter(ad);
+	}
+}
+

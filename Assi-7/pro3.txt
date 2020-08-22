@@ -1,0 +1,96 @@
+3. Create an application that can send message to another emulator. 
+(You have to input the text and emulator number to send message.)
+
+
+-------------------------------
+res/layouts/pro3.xml
+-------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333"
+    android:gravity="center"
+    android:paddingLeft="30sp"
+    android:paddingRight="30sp"
+    android:orientation="vertical" >
+    
+    <EditText
+        android:id="@+id/tsmsno"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="50sp"
+		android:maxLength="10"
+		android:hint="Enter Num Send SMS"
+		android:textColor="#fff"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+    <EditText
+        android:id="@+id/tsms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:layout_marginBottom="50sp"
+		android:maxLength="10"
+		android:hint="Enter SMS to Send"
+		android:textColor="#fff" >
+
+        <requestFocus />
+    </EditText>
+	<Button 
+	    android:id="@+id/bsms"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:text="Call"
+	    android:layout_marginTop="50sp"
+	    />
+    
+
+</LinearLayout>
+
+-------------------------------
+src/samiyal/assi7/Pro3.java
+-------------------------------
+package samiyal.assi7;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.telephony.SmsManager;
+import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class Pro3 extends Activity {
+	EditText num, sms;
+	Button sbtn;
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro3);
+		sbtn = (Button) findViewById(R.id.bsms);
+		num = (EditText) findViewById(R.id.tsmsno);
+		sms = (EditText) findViewById(R.id.tsms);
+		sbtn.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				String n = num.getText().toString().trim();
+				String s = sms.getText().toString().trim();
+				Log.e("sms : ", n+" - "+s);
+				try{
+					SmsManager sm = SmsManager.getDefault();
+					sm.sendTextMessage(n, null, s, null, null);
+					Toast.makeText(getApplicationContext(), "sms send", Toast.LENGTH_SHORT).show();
+				}catch(Exception e) {
+					Toast.makeText(getApplicationContext(), "sms not send", Toast.LENGTH_SHORT).show();
+				}
+				
+			}
+		});
+	}
+}

@@ -1,0 +1,67 @@
+3. Define Frame by Frame animation using 3 different images.
+
+
+------------------------------------------------
+res/layout/pro3.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/trgimg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight=".5" />
+
+	
+</LinearLayout>
+------------------------------------------------
+res/drawable/myanim.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android" >
+   <item
+       android:drawable="@drawable/disc"
+       android:duration="50"/>
+   <item
+       android:drawable="@drawable/donut"
+       android:duration="50"/>
+   <item
+       android:drawable="@drawable/mask"
+       android:duration="50"/>
+</animation-list>
+
+------------------------------------------------
+src/samiyal/assi6/Pro3.java
+------------------------------------------------
+package samiyal.assi6;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
+import android.os.Bundle;
+import android.widget.ImageView;
+
+public class Pro3 extends Activity {
+	ImageView iv;
+	@SuppressLint("NewApi") @Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.pro3);
+		iv = (ImageView) findViewById(R.id.trgimg);
+	/*
+		alernative way for doing frame by frame animation is by creating bitmap drawable 
+		BitmapDrawable b1 = (BitmapDrawable) getResources().getDrawable(R.drawable.one);
+		AnimationDrawable ad = new AnimationDrawable();
+		ad.addFrame(b1, 400);
+		ad.setOnShot(false);
+		iv.startAnimation(ad);
+	*/
+		AnimationDrawable ad = (AnimationDrawable) getResources().getDrawable(R.drawable.myanim);
+		iv.setBackground(ad);
+		ad.start();
+	}
+}

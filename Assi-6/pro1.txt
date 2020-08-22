@@ -1,0 +1,213 @@
+1. Create class that start service on button event and print Toast using Broadcast.
+
+
+------------------------------------------------
+res/layout/activity_main.xml
+------------------------------------------------
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:background="@drawable/backstyle"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <Button
+        android:id="@+id/stbtn"
+        android:layout_width="wrap_content"
+        android:background="@drawable/btnstyle"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:layout_marginTop="100sp"
+        android:text="@string/serbtn" />
+    <Button
+        android:id="@+id/spbtn"
+        android:layout_width="wrap_content"
+        android:background="@drawable/btnstyle"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:layout_marginTop="50sp"
+        android:text="@string/stpbtn" />
+
+    <TextView android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:autoLink="web"
+        android:text="@string/site"
+        android:textSize="20sp"
+        android:layout_marginTop="100sp"
+        android:typeface="serif"/>
+</LinearLayout>
+
+------------------------------------------------
+res/values/strings.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">A4</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+	<string name="serbtn">Start The Services</string>
+	<string name="stpbtn">Stop The Services</string>
+	<string name="site">http://www.samiyalization.ml</string>
+</resources>
+------------------------------------------------
+res/drawable/backstyle
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <gradient android:angle="45"
+        android:startColor="#157"
+        android:endColor="#751"/>
+</shape>
+------------------------------------------------
+res/drawable/btnstyle
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <gradient android:angle="45"
+        android:startColor="#715"
+        android:endColor="#517"/>
+    <corners android:radius="50dp" />
+    <padding android:left="15sp"
+        android:top="10sp"
+        android:bottom="10sp"
+        android:right="15sp"/>
+</shape>
+------------------------------------------------
+src/samiyalization/ass6/MainActivity.java
+------------------------------------------------
+package samiyalization.a4;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+
+public class MainActivity extends Activity {
+	Button bt, bp;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        bt = (Button) findViewById(R.id.stbtn);
+        bp = (Button) findViewById(R.id.spbtn);
+        bt.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Log.e("for stop btn check","hello");
+				Intent s = new Intent(MainActivity.this, DispData.class);
+				startService(s);
+			}
+		});
+        bp.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Log.e("for start btn check","hello");
+				stopService(new Intent(getBaseContext(), DispData.class));
+			}
+		});
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+    
+}
+------------------------------------------------
+src/samiyalization/ass6/DispData.java
+------------------------------------------------
+package samiyalization.a4;
+
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
+
+public class DispData extends Service {
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		Log.e("from ser", "oncreate of service");
+		Intent b = new Intent();
+		b.setAction("samiyalization.a4.CUSTOM_INTENT");
+		sendBroadcast(b);
+	}
+	@Override
+	public int onStartCommand(Intent intent, int flags, int startId) {
+		Log.e("from ser", "onstart of service");
+		return super.onStartCommand(intent, flags, startId);
+	}
+	@Override
+	public IBinder onBind(Intent i) {
+		Log.e("from ser", "onbind of service");
+		return null;
+	}
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.e("from ser", "ondestroy of service");
+	}
+}
+------------------------------------------------
+src/samiyalization/ass6/BCast.java
+------------------------------------------------
+package samiyalization.a4;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.widget.Toast;
+
+public class BCast extends BroadcastReceiver {
+	@Override
+	public void onReceive(Context c, Intent i) {
+		Toast.makeText(c,"Broadcast received", Toast.LENGTH_LONG).show();
+	}
+}
+
+------------------------------------------------
+AndroidManifest.xml
+------------------------------------------------
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="samiyal.assi6"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="18" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="samiyal.assi6.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity android:name="samiyal.assi6.Pro3">
+           
+        </activity>
+        <activity android:name="samiyal.assi6.Pro4" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
