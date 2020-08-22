@@ -1,3 +1,3 @@
 # Assignment - 4
-- clone it, extract it, import it to eclipse(adt bundle).
+- text file contining xml and java code.
 - tested on Eclipse ADT Bundle-20301030.
