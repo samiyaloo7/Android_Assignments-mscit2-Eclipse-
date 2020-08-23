@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:background="#779"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+	    <LinearLayout
+	        android:background="#abe"
+	        android:paddingBottom="10dp"
+	        android:orientation="horizontal"
+	        android:paddingLeft="30sp"
+	        android:paddingRight="30sp"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+		    <TextView android:layout_width="0dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="5"
+		        android:textSize="30sp"
+		        android:textColor="#fff"
+		        android:background="#abe"
+		        android:gravity="center"
+		        android:text="-: Detabase :-"/>
+		    <Button 
+		        android:id="@+id/btn_disp"
+		        android:layout_weight="1"
+		        android:layout_width="0dp"
+		        android:text="="
+				android:layout_height="wrap_content"/>
+	    </LinearLayout>
+	    
+	    <!--  insert disign  -->
+	    <TextView android:layout_width="match_parent"
+	        android:layout_marginTop="10dp"
+	        android:layout_height="wrap_content"
+	        android:textSize="30sp"
+	        android:textColor="#fff"
+	        android:background="#abe"
+	        android:gravity="center"
+	        android:text="Insert recored"/>
+	    <LinearLayout
+	        android:background="#abe"
+	        android:paddingTop="20dp"
+	        android:paddingBottom="10dp"
+	        android:orientation="horizontal"
+	        android:paddingLeft="30sp"
+	        android:paddingRight="30sp"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+		    <EditText 
+		        android:id="@+id/et_in"
+		        android:layout_weight="3"
+		        android:layout_width="0dp"
+		        android:hint="Name to insert"
+				android:layout_height="wrap_content"/>
+		    <Button 
+		        android:id="@+id/btn_in"
+		        android:layout_weight="2"
+		        android:layout_width="0dp"
+		        android:text="Insert"
+				android:layout_height="wrap_content"/>
+	    </LinearLayout>
+	    
+	    <!--  delete disign  -->
+	    <TextView android:layout_width="match_parent"
+	        android:background="#abe"
+	        android:layout_marginTop="10dp"
+	        android:textColor="#fff"
+	        android:layout_height="wrap_content"
+	        android:textSize="30sp"
+	        android:gravity="center"
+	        android:text="Delete recored"/>
+	    <LinearLayout
+	        android:background="#abe"
+	        android:paddingTop="20dp"
+	        android:paddingBottom="10dp"
+	        android:orientation="horizontal"
+	        android:paddingLeft="30sp"
+	        android:paddingRight="30sp"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+		    <EditText 
+		        android:id="@+id/et_del"
+		        android:layout_weight="3"
+		        android:layout_width="0dp"
+		        android:hint="Name to delete"
+				android:layout_height="wrap_content"/>
+		    <Button 
+		        android:id="@+id/btn_del"
+		        android:layout_weight="2"
+		        android:layout_width="0dp"
+		        android:text="Delete"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
+		
+	    <!--  delete disign  -->
+	    <TextView android:layout_width="match_parent"
+	        android:background="#abe"
+	        android:layout_marginTop="10dp"
+	        android:textColor="#fff"
+	        android:layout_height="wrap_content"
+	        android:textSize="30sp"
+	        android:gravity="center"
+	        android:text="Update recored"/>
+	    <LinearLayout
+	        android:background="#abe"
+	        android:paddingTop="20dp"
+	        android:paddingBottom="10dp"
+	        android:orientation="vertical"
+	        android:paddingLeft="30sp"
+	        android:paddingRight="30sp"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+		    <EditText 
+		        android:id="@+id/et_old_up"
+		        android:layout_width="match_parent"
+		        android:hint="Old name"
+				android:layout_height="wrap_content"/>
+		    
+		    <EditText 
+		        android:id="@+id/et_new_up"
+		        android:layout_width="match_parent"
+		        android:hint="New name"
+				android:layout_height="wrap_content"/>
+		    <Button 
+		        android:id="@+id/btn_up"
+		        android:layout_width="match_parent"
+		        android:text="Update"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
+		
+	</LinearLayout>
+</ScrollView>

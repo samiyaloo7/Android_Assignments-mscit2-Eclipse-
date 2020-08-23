@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="#33"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+	  <LinearLayout
+	     android:background="#abe"
+	     android:paddingBottom="10dp"
+	     android:orientation="horizontal"
+	     android:paddingLeft="30sp"
+	     android:paddingRight="30sp"
+	     android:layout_width="match_parent"
+	     android:layout_height="wrap_content" >
+	     <Button 
+		      android:id="@+id/btn_back"
+		      android:layout_weight="1"
+		      android:layout_width="0dp"
+		      android:text="@string/back_arrow"
+		      android:layout_height="wrap_content"/>
+		  <TextView android:layout_width="0dp"
+		      android:layout_marginTop="10dp"
+		      android:layout_height="wrap_content"
+		      android:layout_weight="6"
+		      android:textSize="30sp"
+		      android:textColor="#fff"
+		      android:background="#abe"
+		      android:gravity="center"
+		      android:text="-: Detabase :-"/>
+	 </LinearLayout>
+
+	  <ListView
+	      android:id="@+id/lv_names"
+	      android:layout_width="match_parent"
+	      android:layout_height="wrap_content"
+	      android:background="#257" >
+	  </ListView>
+
+</LinearLayout>
